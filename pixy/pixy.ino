@@ -154,10 +154,10 @@ void reverse(){
 
 void returnToStart(int arr[][2], int len){
   for(int i=len-1; i>-1; i--){
-    if(arr[i] == 1){
+    if(arr[i][0] == 1){
       right_turn(arr[i][1]);
     }
-    else if(arr[i] == 2){
+    else if(arr[i][0] == 2){
       left_turn(arr[i][1]);
     }
     else{ 
