@@ -1,5 +1,6 @@
 //PixyCam code - Start 3 feb 2019
 
+
 #include <Pixy2.h>
 #include <SPI.h>
 #include <Pixy2CCC.h>  
@@ -27,6 +28,7 @@ void setup(){
   Serial.begin(115200);
   Serial.print("Starting...\n");
   pixy.init();
+
   for (int i=0; i<120; i++){
     for (int j=0; j<2; j++){
       backArr[i][j] = 0;
@@ -34,16 +36,13 @@ void setup(){
   }
 }
 
-
-
 void loop(){ 
   digitalWrite(leftForward, LOW);
   digitalWrite(leftBackward, LOW);
   digitalWrite(rightForward, LOW);
   digitalWrite(rightBackward, LOW);
   delay(1000);
-   
-   
+
   // grab blocks!
   pixy.ccc.getBlocks();
   
@@ -60,11 +59,13 @@ void loop(){
       y = pixy.ccc.blocks[i].m_y;
       int height = pixy.ccc.blocks[i].m_height;
       int width = pixy.ccc.blocks[i].m_width;
+
       if(height*width < 500){
         Serial.print("Marble Detected \n");
         k = i;
         break;
       }
+
       else if(height*width >= 500){
         Serial.print("Obstacle Detected: Area = ");
         Serial.print(height*width);
@@ -142,6 +143,7 @@ void straight(){
   delay(1000);
   Serial.print("end straight\n");
 }
+
 void reverse(){
   digitalWrite(leftForward, HIGH);
   digitalWrite(leftBackward, LOW);
@@ -154,15 +156,15 @@ void reverse(){
 
 void returnToStart(int arr[][2], int len){
   for(int i=len-1; i>-1; i--){
-    if(arr[i] == 1){
+    if(arr[i][0] == 1){
       right_turn(arr[i][1]);
     }
-    else if(arr[i] == 2){
+    else if(arr[i][0] == 2){
       left_turn(arr[i][1]);
     }
     else{ 
       reverse();
     }
-  }
-  
+  } 
 }
+
